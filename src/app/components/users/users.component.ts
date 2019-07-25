@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/shared/users.service';
 import { User } from './user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -11,11 +12,13 @@ import { User } from './user';
 export class UsersComponent implements OnInit {
 
   userForm = new FormGroup({
-    title: new FormControl(''),
-    id: new FormControl(''),
+    id: new FormControl('', Validators.required),
+    title: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
   users: User[] = [];
   user: User[] = [];
+  usersList: Observable<User[]>;
+
   constructor(private service: UserService, private fb: FormBuilder) {
 
   }
@@ -30,42 +33,32 @@ export class UsersComponent implements OnInit {
       );
     }
     onSubmit() {
-      if(user == '' ) {
-        return;
-      }
       const newUser = this.userForm.value;
       this.service.postUser(newUser).subscribe(
         user => this.users.push(user)
       );
-      // TODO: Use EventEmitter with form value
       console.warn(this.userForm.value);
-       return false;
-    }
-
-
-  // createFormGroup(userForm) {
-  //   return new FormGroup({
-  //     personalData: new FormGroup({
-  //       title: new FormControl(),
-  //     }),
-  //     requestType: new FormControl(),
-  //     text: new FormControl()
-  //   });
-  // }
-
-  //   onSubmit( userForm: FormGroup ): void {
-  //     if (this.userForm.value !== '') {
-  // this.service.addUser(this.userForm.controls['title'].value)
-  //   .subscribe(user => this.users.push(user)
-
-  //   );
-
-  //     } else {
-  //      alert('Por favor ingresar datos completos');
-  //     }
-  //   }
-  // onSubmit() {
-  //   // TODO: Use EventEmitter with form value
-  //   console.warn(this.userForm.value);
-  // }
+      if (this.userForm.value === '') {
+        return;
+      } else {
+        alert('Titulo Creado');
+      }
+      }
+      reloadData() {
+        this.usersList = this.service.getUsers();
+      }
+      suppressUser(id) {
+        this.service.deleteUser(id).subscribe(
+          data => {
+            console.log('Eliminado');
+            this.reloadData();
+          }
+        );
+      }
+      editUser(id) {
+        this.service.updateUser(id).subscribe(
+          user =>
+        this.users.push(id)
+        )
+      }
 }
