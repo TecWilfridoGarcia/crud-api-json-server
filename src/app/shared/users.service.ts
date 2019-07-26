@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
     private url = 'http://localhost:3000/users';
+  user: User;
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable <User[]> {
@@ -27,14 +28,8 @@ export class UserService {
         return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
     }
 
-    updateUser(id): Observable<any> {
-        return this.http.put(this.url, id);
-      }
-      /** PUT: update the hero on the server */
-// updateHero (hero: Hero): Observable<any> {
-//     return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
-//       tap(_ => this.log(`updated hero id=${hero.id}`)),
-//       catchError(this.handleError<any>('updateHero'))
-//     );
-//   }
+    putUser(user: User) {
+        return this.http.put(this.url + '/User/' + user.id , user);
+
+       }
 }

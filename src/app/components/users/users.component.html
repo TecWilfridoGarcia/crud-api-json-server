@@ -10,12 +10,12 @@
               <form [formGroup]="userForm"  (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="id">Id</label>
-                  <input type="number" class="form-control" id="id" formControlName="id" required>
+                  <input type="number" class="form-control"  [(ngModel)]="user.id" formControlName="id" required>
                 </div>
                 <div class="form-group">
                   <label for="title">Title</label>
                   <input type="text" class="form-control"
-                  required minlength="3"  id="title" formControlName="title"  required>                
+                  required minlength="3"  [(ngModel)]="user.title"  formControlName="title"  required>                
                   <div *ngIf="userForm.get('title').errors && userForm.get('title').dirty">
                     <p *ngIf="userForm.get('title').hasError('required')">Campo Requerido</p>
                   </div>
@@ -42,11 +42,11 @@
 
             </tr>
           </thead>
-          <tbody *ngFor="let user of users">
-            <tr>
+          <tbody >
+            <tr *ngFor="let user of users">
               <th scope="row">{{user.id}}</th>
-              <td>{{user.title}}</td>
-              <td><button type="submit" class="btn btn-primary"  (click)="editUser(user.id)"><i class="material-icons">
+              <td >{{user.title}}</td>
+              <td><button type="submit" class="btn btn-primary"  (click)="populateForm(user)"><i class="material-icons">
                   update
                   </i></button></td>
               <td><button  type="submit" (click)=" suppressUser(user.id)" class="btn btn-danger"><i class="material-icons">

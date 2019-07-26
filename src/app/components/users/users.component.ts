@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
 import { UserService } from 'src/app/shared/users.service';
 import { User } from './user';
 import { Observable } from 'rxjs';
@@ -32,7 +32,16 @@ export class UsersComponent implements OnInit {
         }
       );
     }
-    onSubmit() {
+
+    onSubmit(user: NgForm) {
+      if (user == null) {
+        this.postUser(user);
+      } else {
+        this.updateUser(user);
+      }
+    }
+
+    postUser() {
       const newUser = this.userForm.value;
       this.service.postUser(newUser).subscribe(
         user => this.users.push(user)
@@ -55,10 +64,22 @@ export class UsersComponent implements OnInit {
           }
         );
       }
-      editUser(id) {
-        this.service.updateUser(id).subscribe(
-          user =>
-        this.users.push(id)
-        )
+      resetForm(user?: NgForm) {
+        if (user != null) {
+          user.resetForm();
+        }
+        this.service.user = {
+         id: null,
+          title: ''
+        };
+      }
+      updateUser(user: NgForm) {
+        this.service.putUser(user).subscribe(res => {
+          this.resetForm(user);
+        });
+      }
+      populateForm(user: User) {
+        this.service.user = Object.assign({}, user);
+        console.log(user);
       }
 }
