@@ -3,6 +3,8 @@ import { FormControl, FormBuilder, Validators, FormGroup, NgForm } from '@angula
 import { UserService } from 'src/app/shared/users.service';
 import { User } from './user';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { url } from 'inspector';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +21,7 @@ export class UsersComponent implements OnInit {
   user: User[] = [];
   usersList: Observable<User[]>;
 
-  constructor(private service: UserService, private fb: FormBuilder) {
+  constructor(private service: UserService, private fb: FormBuilder, private router: Router) {
 
   }
 
@@ -33,12 +35,13 @@ export class UsersComponent implements OnInit {
       );
     }
 
-    onSubmit(user: NgForm) {
-      if (user == null) {
-        this.postUser(user);
-      } else {
-        this.updateUser(user);
-      }
+    onSubmit() {
+      // if (user == null) {
+      //   this.postUser(user);
+      // } else {
+      //   this.updateUser(user);
+      // }
+      this.postUser();
     }
 
     postUser() {
@@ -56,7 +59,7 @@ export class UsersComponent implements OnInit {
       reloadData() {
         this.usersList = this.service.getUsers();
       }
-      suppressUser(id) {
+      suppressUser(id: any) {
         this.service.deleteUser(id).subscribe(
           data => {
             console.log('Eliminado');
@@ -73,13 +76,11 @@ export class UsersComponent implements OnInit {
           title: ''
         };
       }
-      updateUser(user: NgForm) {
-        this.service.putUser(user).subscribe(res => {
-          this.resetForm(user);
-        });
+      updateUser(user: User) {
+        this.router.navigate(['users/', user.id]);
       }
-      populateForm(user: User) {
-        this.service.user = Object.assign({}, user);
-        console.log(user);
-      }
+      // updateUser(id): void {
+      //   this.service.putUser(this.user);
+
+      // // }
 }

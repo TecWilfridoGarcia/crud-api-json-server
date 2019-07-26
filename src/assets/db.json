@@ -1,10 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "title": "json-server"
-    },
-    {
       "id": 2,
       "title": "Hola 2"
     },

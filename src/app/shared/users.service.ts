@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../components/users/user';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 
@@ -12,7 +13,12 @@ import { Observable } from 'rxjs';
 export class UserService {
     private url = 'http://localhost:3000/users';
   user: User;
+  users: User[] = [];
   constructor(private http: HttpClient) { }
+  form = new FormGroup({
+   id: new FormControl(null),
+   title: new FormControl('', Validators.required)
+  });
 
   getUsers(): Observable <User[]> {
     const httpHeaders = new HttpHeaders ({
@@ -28,8 +34,15 @@ export class UserService {
         return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
     }
 
-    putUser(user: User) {
-        return this.http.put(this.url + '/User/' + user.id , user);
+    populateForm(user) {
+        this.form.setValue(user);
+      }
 
-       }
+      putUser(user) {
+        this.http.put(this.user.id,
+          {
+            title: user.title,
+          });
+      }
+
 }

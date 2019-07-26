@@ -8,12 +8,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
+import { UpdateUserComponent } from './components/users/update-user/update-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     UsersComponent,
+    UpdateUserComponent,
   ],
   imports: [
     BrowserModule,

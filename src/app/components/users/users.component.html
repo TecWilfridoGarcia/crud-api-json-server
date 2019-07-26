@@ -43,10 +43,10 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let user of users">
+            <tr *ngFor="let user of users"  [attr.data-message-id]="user.id">
               <th scope="row">{{user.id}}</th>
               <td >{{user.title}}</td>
-              <td><button type="submit" class="btn btn-primary"  (click)="populateForm(user)"><i class="material-icons">
+              <td><button type="submit" class="btn btn-primary"  (click)="updateUser(user)"><i class="material-icons">
                   update
                   </i></button></td>
               <td><button  type="submit" (click)=" suppressUser(user.id)" class="btn btn-danger"><i class="material-icons">
