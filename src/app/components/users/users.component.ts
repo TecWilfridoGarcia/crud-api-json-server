@@ -37,15 +37,11 @@ export class UsersComponent implements OnInit {
     }
 
     onSubmit() {
-      // if (user == null) {
-      //   this.postUser(user);
-      // } else {
-      //   this.updateUser(user);
-      // }
       this.postUser (this.user, ['$event']);
     }
 
     postUser(user, $event): void {
+
       const newUser = this.userForm.value;
       this.service.postUser(newUser).subscribe(
         data => this.users.push(user)
@@ -64,7 +60,7 @@ export class UsersComponent implements OnInit {
       suppressUser(id: any) {
         this.service.deleteUser(id).subscribe(
           data => {
-            console.log('Eliminado');
+            alert('Eliminado');
             this.reloadData();
           }
         );

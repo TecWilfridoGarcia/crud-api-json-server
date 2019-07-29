@@ -3,7 +3,6 @@ import { UserService } from 'src/app/shared/users.service';
 import { User } from '../user';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update-user',
@@ -31,11 +30,7 @@ export class UpdateUserComponent implements OnInit {
     });
     this.getUserById(this.id);
   }
-//   getUserById(id: number): void {
-// this.service.getUserById(id).subscribe((response) => {
-//   this.editForm.setValue(response);
-// });
-//   }
+
   getUserById(id: number): void {
     this.route.params.forEach((params: Params) => {
       if (params.id !== undefined) {
@@ -54,12 +49,11 @@ export class UpdateUserComponent implements OnInit {
 
 
   onSubmit(user): void {
-    debugger;
     this.service.putUser(this.editForm.value)
       .subscribe(
         data => {
          alert(data);
-         this.router.navigate(['/user']);
+         this.router.navigate(['/users']);
 
         },
         error => {

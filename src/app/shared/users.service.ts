@@ -42,15 +42,11 @@ export class UserService {
     this.form.setValue(user);
   }
 
-  // putUser(user: User): Observable<User> {
-  //   return this.http.put<User>(this.url, user);
-  // }
   putUser(user: User) {
     return this.http.put(this.url + '/' + user.id, user);
   }
   searchTitle(termino: string) {
     const nombreArr: User[] = [];
-    // termino = termino.toLowerCase();
 
     for (const user of this.users) {
       const title: string = user.title.toLocaleLowerCase();
