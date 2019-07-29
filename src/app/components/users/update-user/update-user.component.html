@@ -1,22 +1,21 @@
 <div class="container">
-    <h1>User Form</h1>
-    <form [formGroup]="userForm"  (ngSubmit)="onSubmit()">
+    <h1>Edit Form</h1>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit(user)">
       <div class="form-group">
         <label for="id">Id</label>
-        <input type="number" class="form-control"  formControlName="id" required>
+        <input type="number" class="form-control"  [(ngModel)]="id"  formControlName="id" required>
       </div>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control"
-        required minlength="3"  formControlName="title"  required>                
-        <div *ngIf="userForm.get('title').errors && userForm.get('title').dirty">
-          <p *ngIf="userForm.get('title').hasError('required')">Campo Requerido</p>
+        <input type="text" class="form-control" formControlName="title"  [(ngModel)]="title"  required>                
+        <div *ngIf="editForm.get('title').errors && editForm.get('title').dirty">
+          <p *ngIf="editForm.get('title').hasError('required')">Campo Requerido</p>
         </div>
       </div>
       <button class="btn btn-success"
-       type="submit" [disabled]="userForm.invalid">Submit</button>
+       type="submit" [disabled]="editForm.invalid">Submit</button>
     </form>
     <p>
-      Form Status: {{ userForm.status }}
+      Form Status: {{ editForm.status }}
     </p>
 </div>

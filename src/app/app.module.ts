@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
+import { BuscadorTitleComponent } from './components/buscador-title/buscador-title.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UpdateUserComponent } from './components/users/update-user/update-user.
     NavbarComponent,
     UsersComponent,
     UpdateUserComponent,
+    BuscadorTitleComponent,
   ],
   imports: [
     BrowserModule,

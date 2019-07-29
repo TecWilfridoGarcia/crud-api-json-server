@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/shared/users.service';
+import { User } from '../user';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update-user',
@@ -7,14 +11,59 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./update-user.component.sass']
 })
 export class UpdateUserComponent implements OnInit {
-  userForm: FormGroup;
-  constructor() { }
 
-  ngOnInit() {
-    this.userForm = new FormGroup({
-      id: new FormControl(),
-      title: new FormControl()
-   });
+  user: User;
+  editForm: FormGroup;
+  first: any;
+  id: any;
+  title: any;
+
+  constructor(private formBuilder: FormBuilder,
+              private service: UserService,
+              private router: Router,
+              private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+
+    this.editForm = new FormGroup({
+      id: new FormControl('', Validators.required),
+      title: new FormControl('', [Validators.required, Validators.minLength(3)])
+    });
+    this.getUserById(this.id);
+  }
+//   getUserById(id: number): void {
+// this.service.getUserById(id).subscribe((response) => {
+//   this.editForm.setValue(response);
+// });
+//   }
+  getUserById(id: number): void {
+    this.route.params.forEach((params: Params) => {
+      if (params.id !== undefined) {
+        const id = +params.id;
+        this.service.getUserById(id)
+        .toPromise()
+            .then((data) => {
+              this.editForm.setValue(data);
+              this.user = data;
+              console.log(this.user);
+          })
+          .catch(err => {console.log(err); });
+      }
+    });
   }
 
+
+  onSubmit(user): void {
+    debugger;
+    this.service.putUser(this.editForm.value)
+      .subscribe(
+        data => {
+         alert(data);
+         this.router.navigate(['/user']);
+
+        },
+        error => {
+         alert(error);
+        });
+  }
 }
