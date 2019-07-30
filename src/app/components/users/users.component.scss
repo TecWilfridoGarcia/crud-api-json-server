@@ -1,0 +1,10 @@
+.modal-show{
+    display: block;
+    opacity: 1;
+}
+.truncate {
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

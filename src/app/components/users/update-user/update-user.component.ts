@@ -25,7 +25,7 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
 
     this.editForm = new FormGroup({
-      id: new FormControl('', Validators.required),
+      id: new FormControl(''),
       title: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
     this.getUserById(this.id);
@@ -34,7 +34,8 @@ export class UpdateUserComponent implements OnInit {
   getUserById(id: number): void {
     this.route.params.forEach((params: Params) => {
       if (params.id !== undefined) {
-        const id = +params.id;
+        // tslint:disable-next-line:no-shadowed-variable
+        const id = params.id;
         this.service.getUserById(id)
         .toPromise()
             .then((data) => {
@@ -44,6 +45,7 @@ export class UpdateUserComponent implements OnInit {
           })
           .catch(err => {console.log(err); });
       }
+
     });
   }
 
@@ -52,9 +54,7 @@ export class UpdateUserComponent implements OnInit {
     this.service.putUser(this.editForm.value)
       .subscribe(
         data => {
-         alert(data);
          this.router.navigate(['/users']);
-
         },
         error => {
          alert(error);

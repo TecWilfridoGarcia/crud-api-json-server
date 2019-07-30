@@ -1,23 +1,18 @@
 <div class="container">
-  <button type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#exampleModal">
+  <button type="button" class="btn btn-primary mb-4" (click)="handleNewTicket()">
     Create Item
   </button>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+  <div class="modal fade" [ngClass]="{'modal-show show': showModal}">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close"  (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-              <label for="id">Id</label>
-              <input type="number" class="form-control" formControlName="id" required>
-            </div>
             <div class="form-group">
               <label for="title">Title</label>
               <input type="text" class="form-control" required minlength="3" formControlName="title" required>
@@ -31,12 +26,17 @@
             </div>
           </form>
           <span>
-              Form Status: {{ userForm.status }}  
+            Form Status: {{ userForm.status }}
           </span>
         </div>
       </div>
     </div>
   </div>
+<div class="container mb-3">
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" name="filterPost" placeholder="Search..." [(ngModel)]="filterPost">
+    </form>
+</div>
   <table class="table">
     <thead>
       <tr>
@@ -47,9 +47,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users" (click)="onSelect(user)">
-        <th scope="row">{{user.id}}</th>
-        <td>{{user.title}}</td>
+        <tr *ngFor="let user of users | filter:filterPost">
+            <td>{{user.id}}</td>
+            <td>{{user.title}}</td>
         <td><button type="submit" class="btn btn-primary" (click)="updateUser(user, $event)"><i class="material-icons">
               update
             </i></button></td>

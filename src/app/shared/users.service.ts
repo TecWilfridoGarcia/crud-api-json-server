@@ -20,7 +20,7 @@ export class UserService {
   });
 
 
-  getUsers(): Observable<User[]> {
+   getUsers(): Observable<User[]> {
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: 'Bearer validToke.'

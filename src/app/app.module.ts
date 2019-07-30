@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { UsersComponent } from './components/users/users.component';
 import { UpdateUserComponent } from './components/users/update-user/update-user.component';
-import { BuscadorTitleComponent } from './components/buscador-title/buscador-title.component';
+import { FilterPipe } from './shared/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { BuscadorTitleComponent } from './components/buscador-title/buscador-tit
     NavbarComponent,
     UsersComponent,
     UpdateUserComponent,
-    BuscadorTitleComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
